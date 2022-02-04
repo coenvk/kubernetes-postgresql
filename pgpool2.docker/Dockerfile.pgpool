@@ -1,0 +1,12 @@
+FROM pgpool/pgpool
+
+ARG PGPOOL_VER
+
+ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
+
+COPY entrypoint.sh ${PGPOOL_INSTALL_DIR}/bin/
+
+ENTRYPOINT ["/opt/pgpool-II/bin/entrypoint.sh"]
+CMD ["/opt/pgpool-II/bin/start.sh"]
+
+EXPOSE 9999

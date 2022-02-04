@@ -1,0 +1,5 @@
+namespace: postgres-operator
+
+bases:
+- postgres
+- pgpool

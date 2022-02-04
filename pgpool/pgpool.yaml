@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgpool
+  namespace: postgres-operator
+  labels:
+    app.kubernetes.io/name: pgpool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pgpool
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pgpool
+    spec:
+      containers:
+        - name: pgpool
+          image: coenvk/pgpool:latest
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: user } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: password } }
+            - name: PGPOOL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pgpool-secret
+                  key: PGPOOL_USER
+            - name: PGPOOL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpool-secret
+                  key: PGPOOL_PASSWORD
+            - name: PGPOOL_PARAMS_AUTH_METHOD
+              value: scram-sha-256
+          volumeMounts:
+            - name: pgpool-configmap
+              mountPath: /config
+      volumes:
+        - name: pgpool-configmap
+          configMap:
+            name: pgpool-configmap

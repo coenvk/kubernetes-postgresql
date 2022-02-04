@@ -1,0 +1,7 @@
+namespace: postgres-operator
+
+resources:
+- pgpool-configmap.yaml
+- pgpool-secret.yaml
+- pgpool.yaml
+- pgpool-svc.yaml
