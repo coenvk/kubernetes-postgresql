@@ -1,59 +1,63 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgpool-deployment
+  name: pgpool
+  namespace: postgres-operator
+  labels:
+    app.kubernetes.io/name: pgpool
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pgpool
+      app.kubernetes.io/name: pgpool
   template:
     metadata:
       labels:
-        app: pgpool
+        app.kubernetes.io/name: pgpool
     spec:
       containers:
         - name: pgpool
-          image: bitnami/pgpool
+          image: pgpool/pgpool:latest
           imagePullPolicy: "IfNotPresent"
           env:
-            - name: PGPOOL_BACKEND_NODES
-              value: 0:postgres-statefulset-0.postgres-svc:5432
-            - name: PGPOOL_ENABLE_LDAP
-              value: "no"
-            - name: PGPOOL_POSTGRES_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-secret
-                  key: POSTGRES_USER
-            - name: PGPOOL_POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-secret
-                  key: POSTGRES_PASSWORD
-            - name: PGPOOL_ADMIN_USERNAME
+            - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
+              value: "postgres-primary"
+            - name: PGPOOL_PARAMS_BACKEND_PORT0
+              value: "5432"
+            - name: PGPOOL_PARAMS_BACKEND_WEIGHT0
+              value: "1"
+            - name: PGPOOL_PARAMS_BACKEND_FLAG0
+              value: "ALWAYS_PRIMARY|DISALLOW_TO_FAILOVER"
+            - name: PGPOOL_PARAMS_BACKEND_HOSTNAME1
+              value: "postgres-replicas"
+            - name: PGPOOL_PARAMS_BACKEND_PORT1
+              value: "5432"
+            - name: PGPOOL_PARAMS_BACKEND_WEIGHT1
+              value: "1"
+            - name: PGPOOL_PARAMS_BACKEND_FLAG1
+              value: "DISALLOW_TO_FAILOVER"
+            - name: PGPOOL_PARAMS_FAILOVER_ON_BACKEND_ERROR
+              value: "off"
+            - name: PGPOOL_PARAMS_ENABLE_POOL_HBA
+              value: "on"
+            - name: POSTGRES_USERNAME
+              valueFrom: { secretKeyRef: { name: postgres-pguser-postgres, key: user } }
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: postgres-pguser-postgres, key: password } }
+            - name: PGPOOL_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: pgpool-secret
-                  key: PGPOOL_ADMIN_USERNAME
-            - name: PGPOOL_ADMIN_PASSWORD
+                  key: PGPOOL_USER
+            - name: PGPOOL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgpool-secret
-                  key: PGPOOL_ADMIN_PASSWORD
-            - name: PGPOOL_ENABLE_LOAD_BALANCING
-              value: "yes"
-            - name: PGPOOL_ENABLE_LOG_CONNECTIONS
-              value: "no"
-            - name: PGPOOL_ENABLE_LOG_HOSTNAME
-              value: "yes"
-            - name: PGPOOL_ENABLE_LOG_PER_NODE_STATEMENT
-              value: "no"
-            - name: PGPOOL_CHILD_LIFE_TIME
-              value: ""
-            - name: PGPOOL_ENABLE_TLS
-              value: "no"
-          ports:
-            - name: postgresql
-              containerPort: 5432
-              protocol: TCP
+                  key: PGPOOL_PASSWORD
+          volumeMounts:
+            - name: pgpool-configmap
+              mountPath: /config
+      volumes:
+        - name: pgpool-configmap
+          configMap:
+            name: pgpool-configmap

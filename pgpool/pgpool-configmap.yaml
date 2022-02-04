@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgpool-configmap
+  labels:
+    name: pgpool-configmap
+data:
+  pgpool.conf: |-
+    listen_addresses = '*'
+    port = 9999
+    socket_dir = '/var/run/pgpool'
+    pcp_listen_addresses = '*'
+    pcp_port = 9898
+    pcp_socket_dir = '/var/run/pgpool'
+
+    backend_hostname0 = 'postgres-statefulset-0.postgres-svc'
+    backend_port0 = 5432
+    backend_weight0 = 1
+    backend_data_directory0 = '/var/lib/postgresql/14/data'
+    backend_flag0 = 'ALWAYS_PRIMARY|ALLOW_TO_FAILOVER'
+
+    backend_hostname1 = 'postgres-statefulset-1.postgres-svc'
+    backend_port1 = 5432
+    backend_weight1 = 1
+    backend_data_directory1 = '/var/lib/postgresql/14/data'
+    backend_flag1 = 'ALLOW_TO_FAILOVER'
+
+    backend_hostname2 = 'postgres-statefulset-2.postgres-svc'
+    backend_port2 = 5432
+    backend_weight2 = 1
+    backend_data_directory2 = '/var/lib/postgresql/14/data'
+    backend_flag2 = 'ALLOW_TO_FAILOVER'
+
+    sr_check_period = 10
+    sr_check_user = 'postgres'
+
+    enable_pool_hba = on
+    backend_clustering_mode = 'streaming_replication'
+    num_init_children = 32
+    max_pool = 4
+    child_life_time = 300
+    child_max_connections = 0
+    connection_life_time = 0
+    client_idle_limit = 0
+    connection_cache = on
+    load_balance_mode = on
+    ssl = off
+    failover_on_backend_error = off
+
+    health_check_period = 5
+    health_check_timeout = 30
+    health_check_user = 'pgpool'
+    health_check_password = 'pgpool'
+    health_check_max_retries = 3
+  pool_hba.conf: |-
+    local   all         all                               trust
+    host    all         all         127.0.0.1/32          trust
+    host    all         all         ::1/128               trust
+    host    all         pgpool      0.0.0.0/0             md5
+    host    all         postgres    0.0.0.0/0             md5
+    host    replication all         0.0.0.0/0             md5

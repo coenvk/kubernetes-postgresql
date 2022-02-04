@@ -6,11 +6,11 @@ metadata:
     app: postgres
     role: service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: postgresql
     port: 5432
-    targetPort: 5432
+    targetPort: postgresql
     protocol: TCP
   selector:
     app: postgres

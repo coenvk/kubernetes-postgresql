@@ -3,12 +3,10 @@ kind: Service
 metadata:
   name: pgpool-svc
 spec:
-  type: NodePort
-  sessionAffinity: None
-  ports:
-    - name: postgresql
-      port: 5432
-      targetPort: 5432
-      protocol: TCP
   selector:
     app: pgpool
+  ports:
+    - name: pgpool-port
+      protocol: TCP
+      port: 9999
+      targetPort: 9999
