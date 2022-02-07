@@ -4,6 +4,7 @@ This repository provides `YAML` files to deploy a Postgres cluster on Kubernetes
 CrunchyData Postgres Operator (PGO) v5. PGO ensures replication and automatic failover. Pgpool-II provides connection
 pooling and query load balancing. Any write queries are directed to the master database instance while read queries are
 load balanced across all instances.
+
 ---
 
 ## Prerequisites
