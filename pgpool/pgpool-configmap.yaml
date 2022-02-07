@@ -33,9 +33,11 @@ data:
     connection_life_time = 0
     client_idle_limit = 0
     connection_cache = on
-    load_balance_mode = on
     ssl = on
     failover_on_backend_error = off
+
+    load_balance_mode = on
+    database_redirect_preference_list = 'postgres:standby(0.67),hippo:standby(0.67)'
   pool_hba.conf: |-
     local   all         all                               trust
     host    all         all         127.0.0.1/32          trust

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <changeSet id="loadUpdateData__customer" author="Coen">
+        <loadUpdateData file="db/seeding/customer.csv" separator="," tableName="customer" primaryKey="id" usePreparedStatements="true">
+            <column header="id" name="id" type="NUMERIC" />
+            <column header="name" name="name" type="STRING" />
+            <column header="email" name="email" type="STRING" />
+            <column header="username" name="username" type="STRING" />
+            <column header="password" name="password" type="STRING" />
+            <column header="createdAt" name="created_at" type="DATE" />
+        </loadUpdateData>
+    </changeSet>
+
+    <changeSet id="loadUpdateData__account" author="Coen">
+        <loadUpdateData file="db/seeding/account.csv" separator="," tableName="account" primaryKey="id" usePreparedStatements="true">
+            <column header="id" name="id" type="NUMERIC" />
+            <column header="iban" name="iban" type="STRING" />
+            <column header="dateOpened" name="date_opened" type="DATE" />
+            <column header="customerId" name="customer_id" type="NUMERIC" />
+            <column header="balance" name="balance" type="NUMERIC" />
+        </loadUpdateData>
+    </changeSet>
+
+    <changeSet id="loadUpdateData__transaction" author="Coen">
+        <loadUpdateData file="db/seeding/transaction.csv" separator="," tableName="transaction" primaryKey="id" usePreparedStatements="true">
+            <column header="id" name="id" type="NUMERIC" />
+            <column header="datetime" name="datetime" type="DATE" />
+            <column header="amount" name="amount" type="NUMERIC" />
+            <column header="fromAccountId" name="from_account_id" type="NUMERIC" />
+            <column header="toAccountId" name="to_account_id" type="NUMERIC" />
+        </loadUpdateData>
+    </changeSet>
+</databaseChangeLog>

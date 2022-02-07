@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <changeSet id="createTable__customer" author="Coen">
+        <createTable tableName="customer">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)"/>
+            <column name="username" type="varchar(50)"/>
+            <column name="password" type="varchar(50)"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTable__account" author="Coen">
+        <createTable tableName="account">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="iban" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_opened" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="int">
+                <constraints nullable="false" references="customer(id)"
+                             foreignKeyName="fk__account__customer_id__customer__id"/>
+            </column>
+            <column name="balance" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTable__transaction" author="Coen">
+        <createTable tableName="transaction">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="datetime" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="from_account_id" type="int">
+                <constraints nullable="false" references="account(id)"
+                             foreignKeyName="fk__transaction__from_account_id__account__id"/>
+            </column>
+            <column name="to_account_id" type="int">
+                <constraints nullable="false" references="account(id)"
+                             foreignKeyName="fk__transaction__to_account_id__account__id"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

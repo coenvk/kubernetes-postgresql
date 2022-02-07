@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase
+spec:
+  template:
+    spec:
+      containers:
+        - name: liquibase
+          image: coenvk/liquibase-container
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: host } }
+            - name: DB_PORT
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: port } }
+            - name: DB_DATABASE
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: dbname } }
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: user } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: password } }
+            - name: DB_URL
+              value: 'jdbc:postgresql://$(DB_HOST):$(DB_PORT)/$(DB_DATABASE)'
+      restartPolicy: OnFailure

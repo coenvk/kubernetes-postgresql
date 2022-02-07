@@ -1,0 +1,5 @@
+FROM liquibase/liquibase
+
+ADD ./db /liquibase/db
+
+CMD ["sh", "-c", "docker-entrypoint.sh --url=${DB_URL} --username=${DB_USERNAME} --password=${DB_PASSWORD} --classpath=/liquibase --changeLogFile=db/changelog/db.changelog-master.xml update"]

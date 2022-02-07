@@ -1,0 +1,5 @@
+namespace: postgres-operator
+
+resources:
+- spring-configmap.yaml
+- spring-svc.yaml
