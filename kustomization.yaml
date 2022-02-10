@@ -5,3 +5,4 @@ bases:
 - liquibase
 - pgpool
 - spring
+- prometheus

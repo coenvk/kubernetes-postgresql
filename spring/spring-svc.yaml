@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: spring-svc
   namespace: postgres-operator
+  annotations:
+    service.kubernetes.io/topology-aware-hints: auto
 spec:
   type: ClusterIP
   selector:
