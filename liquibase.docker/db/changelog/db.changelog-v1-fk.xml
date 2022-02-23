@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <changeSet id="deleteInvalid__title_aka" author="Coen">
+        <sql dbms="postgresql">
+            DELETE FROM title_aka ta
+            WHERE NOT EXISTS (
+            SELECT 1 FROM title t WHERE t.tconst = ta.title_id
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="addForeignKey__title_aka_title_id" author="Coen">
+        <addForeignKeyConstraint constraintName="title_aka_title_id_fkey" baseTableName="title_aka"
+                                 baseColumnNames="title_id" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="deleteInvalid__episode" author="Coen">
+        <sql dbms="postgresql">
+            DELETE FROM episode e
+            WHERE NOT EXISTS (
+            SELECT 1 FROM title t WHERE t.tconst = e.tconst
+            ) OR NOT EXISTS (
+            SELECT 1 FROM title t WHERE t.tconst = e.parent_tconst
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="addForeignKey__episode_tconst" author="Coen">
+        <addForeignKeyConstraint constraintName="episode_tconst_fkey" baseTableName="episode"
+                                 baseColumnNames="tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addForeignKey__episode_parent_tconst" author="Coen">
+        <addForeignKeyConstraint constraintName="episode_parent_tconst_fkey" baseTableName="episode"
+                                 baseColumnNames="parent_tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="deleteInvalid__principal" author="Coen">
+        <sql dbms="postgresql">
+            DELETE FROM principal p
+            WHERE NOT EXISTS (
+            SELECT 1 FROM title t WHERE t.tconst = p.tconst
+            ) OR NOT EXISTS (
+            SELECT 1 FROM person n WHERE n.nconst = p.nconst
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="addForeignKey__principal_tconst" author="Coen">
+        <addForeignKeyConstraint constraintName="principal_tconst_fkey" baseTableName="principal"
+                                 baseColumnNames="tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addForeignKey__principal_nconst" author="Coen">
+        <addForeignKeyConstraint constraintName="principal_nconst_fkey" baseTableName="principal"
+                                 baseColumnNames="nconst" referencedTableName="person" referencedColumnNames="nconst"/>
+    </changeSet>
+
+    <changeSet id="deleteInvalid__rating" author="Coen">
+        <sql dbms="postgresql">
+            DELETE FROM rating r
+            WHERE NOT EXISTS (
+            SELECT 1 FROM title t WHERE t.tconst = r.tconst
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="addForeignKey__rating_tconst" author="Coen">
+        <addForeignKeyConstraint constraintName="rating_tconst_fkey" baseTableName="rating"
+                                 baseColumnNames="tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+</databaseChangeLog>

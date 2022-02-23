@@ -4,62 +4,98 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
-    <changeSet id="createTable__customer" author="Coen">
-        <createTable tableName="customer">
-            <column name="id" type="int" autoIncrement="true">
+    <changeSet id="createTable__person" author="Coen">
+        <createTable tableName="person">
+            <column name="nconst" type="varchar">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="name" type="varchar(50)">
+            <column name="primary_name" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(50)"/>
-            <column name="username" type="varchar(50)"/>
-            <column name="password" type="varchar(50)"/>
-            <column name="created_at" type="datetime">
-                <constraints nullable="false"/>
-            </column>
+            <column name="birth_year" type="int"/>
+            <column name="death_year" type="int"/>
+            <column name="primary_profession" type="varchar"/>
+            <column name="known_for_titles" type="varchar"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="createTable__account" author="Coen">
-        <createTable tableName="account">
-            <column name="id" type="int" autoIncrement="true">
+    <changeSet id="createTable__title" author="Coen">
+        <createTable tableName="title">
+            <column name="tconst" type="varchar">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="iban" type="varchar(40)">
+            <column name="title_type" type="varchar"/>
+            <column name="primary_title" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="date_opened" type="date">
+            <column name="original_title" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="customer_id" type="int">
-                <constraints nullable="false" references="customer(id)"
-                             foreignKeyName="fk__account__customer_id__customer__id"/>
-            </column>
-            <column name="balance" type="bigint">
-                <constraints nullable="false"/>
-            </column>
+            <column name="is_adult" type="boolean"/>
+            <column name="start_year" type="int"/>
+            <column name="end_year" type="int"/>
+            <column name="runtime_minutes" type="int"/>
+            <column name="genres" type="varchar"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="createTable__transaction" author="Coen">
-        <createTable tableName="transaction">
-            <column name="id" type="int" autoIncrement="true">
+    <changeSet id="createTable__title_aka" author="Coen">
+        <createTable tableName="title_aka">
+            <column name="title_id" type="varchar">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="datetime" type="datetime">
+            <column name="ordering" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="amount" type="int">
+            <column name="region" type="varchar"/>
+            <column name="language" type="varchar"/>
+            <column name="types" type="varchar"/>
+            <column name="attributes" type="varchar"/>
+            <column name="is_original_title" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTable__episode" author="Coen">
+        <createTable tableName="episode">
+            <column name="tconst" type="varchar">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="parent_tconst" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="from_account_id" type="int">
-                <constraints nullable="false" references="account(id)"
-                             foreignKeyName="fk__transaction__from_account_id__account__id"/>
+            <column name="season_number" type="int"/>
+            <column name="episode_number" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTable__principal" author="Coen">
+        <createTable tableName="principal">
+            <column name="tconst" type="varchar">
+                <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="to_account_id" type="int">
-                <constraints nullable="false" references="account(id)"
-                             foreignKeyName="fk__transaction__to_account_id__account__id"/>
+            <column name="ordering" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="nconst" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="varchar"/>
+            <column name="job" type="varchar"/>
+            <column name="characters" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createTable__rating" author="Coen">
+        <createTable tableName="rating">
+            <column name="tconst" type="varchar">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="average_rating" type="float"/>
+            <column name="num_votes" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>

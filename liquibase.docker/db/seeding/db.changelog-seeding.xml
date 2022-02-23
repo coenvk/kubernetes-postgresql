@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
-    <changeSet id="loadUpdateData__customer" author="Coen">
-        <loadUpdateData file="db/seeding/customer.csv" separator="," tableName="customer" primaryKey="id" usePreparedStatements="true">
-            <column header="id" name="id" type="NUMERIC" />
-            <column header="name" name="name" type="STRING" />
-            <column header="email" name="email" type="STRING" />
-            <column header="username" name="username" type="STRING" />
-            <column header="password" name="password" type="STRING" />
-            <column header="createdAt" name="created_at" type="DATE" />
-        </loadUpdateData>
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="loadLargeData__person" author="Coen">
+        <ext:loadLargeData file="db/seeding/name.basics.tsv.gz" separator="\t" tableName="person" quote="\b"
+                           columnNames="nconst,primary_name,birth_year,death_year,primary_profession,known_for_titles"/>
     </changeSet>
 
-    <changeSet id="loadUpdateData__account" author="Coen">
-        <loadUpdateData file="db/seeding/account.csv" separator="," tableName="account" primaryKey="id" usePreparedStatements="true">
-            <column header="id" name="id" type="NUMERIC" />
-            <column header="iban" name="iban" type="STRING" />
-            <column header="dateOpened" name="date_opened" type="DATE" />
-            <column header="customerId" name="customer_id" type="NUMERIC" />
-            <column header="balance" name="balance" type="NUMERIC" />
-        </loadUpdateData>
+    <changeSet id="loadLargeData__title" author="Coen">
+        <ext:loadLargeData file="db/seeding/title.basics.tsv.gz" separator="\t" tableName="title" quote="\b"
+                           columnNames="tconst,title_type,primary_title,original_title,is_adult,start_year,end_year,runtime_minutes,genres"/>
     </changeSet>
 
-    <changeSet id="loadUpdateData__transaction" author="Coen">
-        <loadUpdateData file="db/seeding/transaction.csv" separator="," tableName="transaction" primaryKey="id" usePreparedStatements="true">
-            <column header="id" name="id" type="NUMERIC" />
-            <column header="datetime" name="datetime" type="DATE" />
-            <column header="amount" name="amount" type="NUMERIC" />
-            <column header="fromAccountId" name="from_account_id" type="NUMERIC" />
-            <column header="toAccountId" name="to_account_id" type="NUMERIC" />
-        </loadUpdateData>
+    <changeSet id="loadLargeData__title_aka" author="Coen">
+        <ext:loadLargeData file="db/seeding/title.akas.tsv.gz" separator="\t" tableName="title_aka" quote="\b"
+                           columnNames="title_id,ordering,title,region,language,types,attributes,is_original_title"/>
+    </changeSet>
+
+    <changeSet id="loadLargeData__episode" author="Coen">
+        <ext:loadLargeData file="db/seeding/title.episode.tsv.gz" separator="\t" tableName="episode" quote="\b"
+                           columnNames="tconst,parent_tconst,season_number,episode_number"/>
+    </changeSet>
+
+    <changeSet id="loadLargeData__principal" author="Coen">
+        <ext:loadLargeData file="db/seeding/title.principals.tsv.gz" separator="\t" tableName="principal" quote="\b"
+                           columnNames="tconst,ordering,nconst,category,job,characters"/>
+    </changeSet>
+
+    <changeSet id="loadLargeData__rating" author="Coen">
+        <ext:loadLargeData file="db/seeding/title.ratings.tsv.gz" separator="\t" tableName="rating" quote="\b"
+                           columnNames="tconst,average_rating,num_votes"/>
     </changeSet>
 </databaseChangeLog>

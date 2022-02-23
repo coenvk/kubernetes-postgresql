@@ -32,7 +32,9 @@ database_redirect_preference_list = postgres:standby(0.67),hippo:standby(0.67)
 ```
 
 ### Database initialization with Liquibase
-Initially, the database is empty. It does not contain any tables. A Docker container was created that creates a demo database and seeds it. There is a Kubernetes `Job` that runs the container to initialize the database. Similarly, a different Docker container can be built that specifies other data. The example can be found in `liquibase.docker` and a [tutorial](https://www.liquibase.com/blog/using-liquibase-in-kubernetes) is also available.
+Initially, the database is empty. It does not contain any tables. A Docker container was created that creates a demo database and seeds it. 
+There is a Kubernetes `Job` that runs the container to initialize the database. Similarly, a different Docker container can be built that specifies other data. 
+The example can be found in `liquibase.docker` and a [tutorial](https://www.liquibase.com/blog/using-liquibase-in-kubernetes) is also available.
 
 ### Spring application
 A Spring application can be deployed using the `spring/spring-v1.yaml` and `spring/spring-v2.yaml` files.
