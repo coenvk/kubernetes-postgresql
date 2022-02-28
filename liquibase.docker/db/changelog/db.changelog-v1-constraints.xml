@@ -4,6 +4,30 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <changeSet id="addPrimaryKey__person" author="Coen">
+        <addPrimaryKey tableName="person" columnNames="nconst"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__person_primary_name" author="Coen">
+        <addNotNullConstraint tableName="person" columnName="primary_name"/>
+    </changeSet>
+
+    <changeSet id="addPrimaryKey__title" author="Coen">
+        <addPrimaryKey tableName="title" columnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__title_primary_title" author="Coen">
+        <addNotNullConstraint tableName="title" columnName="primary_title"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__title_original_title" author="Coen">
+        <addNotNullConstraint tableName="title" columnName="original_title"/>
+    </changeSet>
+
+    <changeSet id="addPrimaryKey__title_aka" author="Coen">
+        <addPrimaryKey tableName="title_aka" columnNames="title_id,ordering"/>
+    </changeSet>
+
     <changeSet id="deleteInvalid__title_aka" author="Coen">
         <sql dbms="postgresql">
             DELETE FROM title_aka ta
@@ -16,6 +40,14 @@
     <changeSet id="addForeignKey__title_aka_title_id" author="Coen">
         <addForeignKeyConstraint constraintName="title_aka_title_id_fkey" baseTableName="title_aka"
                                  baseColumnNames="title_id" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__title_aka_title" author="Coen">
+        <addNotNullConstraint tableName="title_aka" columnName="title"/>
+    </changeSet>
+
+    <changeSet id="addPrimaryKey__episode" author="Coen">
+        <addPrimaryKey tableName="episode" columnNames="tconst"/>
     </changeSet>
 
     <changeSet id="deleteInvalid__episode" author="Coen">
@@ -36,7 +68,16 @@
 
     <changeSet id="addForeignKey__episode_parent_tconst" author="Coen">
         <addForeignKeyConstraint constraintName="episode_parent_tconst_fkey" baseTableName="episode"
-                                 baseColumnNames="parent_tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+                                 baseColumnNames="parent_tconst" referencedTableName="title"
+                                 referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__episode_parent_tconst" author="Coen">
+        <addNotNullConstraint tableName="episode" columnName="parent_tconst"/>
+    </changeSet>
+
+    <changeSet id="addPrimaryKey__principal" author="Coen">
+        <addPrimaryKey tableName="principal" columnNames="tconst,ordering"/>
     </changeSet>
 
     <changeSet id="deleteInvalid__principal" author="Coen">
@@ -60,6 +101,14 @@
                                  baseColumnNames="nconst" referencedTableName="person" referencedColumnNames="nconst"/>
     </changeSet>
 
+    <changeSet id="addNotNullConstraint__principal_nconst" author="Coen">
+        <addNotNullConstraint tableName="principal" columnName="nconst"/>
+    </changeSet>
+
+    <changeSet id="addPrimaryKey__rating" author="Coen">
+        <addPrimaryKey tableName="rating" columnNames="tconst"/>
+    </changeSet>
+
     <changeSet id="deleteInvalid__rating" author="Coen">
         <sql dbms="postgresql">
             DELETE FROM rating r
@@ -72,5 +121,13 @@
     <changeSet id="addForeignKey__rating_tconst" author="Coen">
         <addForeignKeyConstraint constraintName="rating_tconst_fkey" baseTableName="rating"
                                  baseColumnNames="tconst" referencedTableName="title" referencedColumnNames="tconst"/>
+    </changeSet>
+
+    <changeSet id="addDefaultValue__rating_num_votes" author="Coen">
+        <addDefaultValue tableName="rating" columnName="num_votes" defaultValueNumeric="0"/>
+    </changeSet>
+
+    <changeSet id="addNotNullConstraint__rating_num_votes" author="Coen">
+        <addNotNullConstraint tableName="rating" columnName="num_votes"/>
     </changeSet>
 </databaseChangeLog>

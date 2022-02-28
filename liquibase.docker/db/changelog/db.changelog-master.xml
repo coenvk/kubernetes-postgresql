@@ -7,5 +7,5 @@
 
     <include file="db/changelog/db.changelog-v1.xml"/>
     <include file="db/seeding/db.changelog-seeding.xml"/>
-    <include file="db/changelog/db.changelog-v1-fk.xml"/>
+    <include file="db/changelog/db.changelog-v1-constraints.xml"/>
 </databaseChangeLog>

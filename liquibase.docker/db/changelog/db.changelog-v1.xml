@@ -6,12 +6,8 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
     <changeSet id="createTable__person" author="Coen">
         <createTable tableName="person">
-            <column name="nconst" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="primary_name" type="varchar">
-                <constraints nullable="false"/>
-            </column>
+            <column name="nconst" type="varchar"/>
+            <column name="primary_name" type="varchar"/>
             <column name="birth_year" type="int"/>
             <column name="death_year" type="int"/>
             <column name="primary_profession" type="varchar"/>
@@ -21,16 +17,10 @@
 
     <changeSet id="createTable__title" author="Coen">
         <createTable tableName="title">
-            <column name="tconst" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
+            <column name="tconst" type="varchar"/>
             <column name="title_type" type="varchar"/>
-            <column name="primary_title" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="original_title" type="varchar">
-                <constraints nullable="false"/>
-            </column>
+            <column name="primary_title" type="text"/>
+            <column name="original_title" type="varchar"/>
             <column name="is_adult" type="boolean"/>
             <column name="start_year" type="int"/>
             <column name="end_year" type="int"/>
@@ -41,15 +31,9 @@
 
     <changeSet id="createTable__title_aka" author="Coen">
         <createTable tableName="title_aka">
-            <column name="title_id" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="ordering" type="int">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="title" type="varchar">
-                <constraints nullable="false"/>
-            </column>
+            <column name="title_id" type="varchar"/>
+            <column name="ordering" type="int"/>
+            <column name="title" type="varchar"/>
             <column name="region" type="varchar"/>
             <column name="language" type="varchar"/>
             <column name="types" type="varchar"/>
@@ -60,12 +44,8 @@
 
     <changeSet id="createTable__episode" author="Coen">
         <createTable tableName="episode">
-            <column name="tconst" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="parent_tconst" type="varchar">
-                <constraints nullable="false"/>
-            </column>
+            <column name="tconst" type="varchar"/>
+            <column name="parent_tconst" type="varchar"/>
             <column name="season_number" type="int"/>
             <column name="episode_number" type="int"/>
         </createTable>
@@ -73,15 +53,9 @@
 
     <changeSet id="createTable__principal" author="Coen">
         <createTable tableName="principal">
-            <column name="tconst" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="ordering" type="int">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="nconst" type="varchar">
-                <constraints nullable="false"/>
-            </column>
+            <column name="tconst" type="varchar"/>
+            <column name="ordering" type="int"/>
+            <column name="nconst" type="varchar"/>
             <column name="category" type="varchar"/>
             <column name="job" type="varchar"/>
             <column name="characters" type="varchar"/>
@@ -90,13 +64,9 @@
 
     <changeSet id="createTable__rating" author="Coen">
         <createTable tableName="rating">
-            <column name="tconst" type="varchar">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
+            <column name="tconst" type="varchar"/>
             <column name="average_rating" type="float"/>
-            <column name="num_votes" type="int" defaultValueNumeric="0">
-                <constraints nullable="false"/>
-            </column>
+            <column name="num_votes" type="int"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
