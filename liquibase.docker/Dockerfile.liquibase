@@ -1,4 +1,4 @@
-FROM liquibase/liquibase
+FROM liquibase/liquibase:4.7.1
 
 ADD ./db /liquibase/db
 
