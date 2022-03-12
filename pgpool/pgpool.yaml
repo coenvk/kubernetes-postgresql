@@ -37,17 +37,19 @@ spec:
             - name: DB_PASSWORD
               valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: password } }
             - name: PGPOOL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: pgpool-secret
-                  key: PGPOOL_USER
+              valueFrom: { secretKeyRef: { name: pgpool-secret, key: PGPOOL_USER } }
             - name: PGPOOL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: pgpool-secret
-                  key: PGPOOL_PASSWORD
+              valueFrom: { secretKeyRef: { name: pgpool-secret, key: PGPOOL_PASSWORD } }
             - name: PGPOOL_PARAMS_AUTH_METHOD
               value: scram-sha-256
+            - name: POSTGRES_USERNAME
+              valueFrom: { secretKeyRef: { name: hippo-pguser-postgres, key: user } }
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: hippo-pguser-postgres, key: password } }
+            - name: TPCC_USERNAME
+              valueFrom: { secretKeyRef: { name: tpcc-secret, key: TPCC_USER } }
+            - name: TPCC_PASSWORD
+              valueFrom: { secretKeyRef: { name: tpcc-secret, key: TPCC_PASSWORD } }
           volumeMounts:
             - name: pgpool-configmap
               mountPath: /config

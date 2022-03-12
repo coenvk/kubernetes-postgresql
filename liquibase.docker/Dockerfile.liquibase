@@ -1,5 +1,9 @@
 FROM liquibase/liquibase:4.7.1
 
-ADD ./db /liquibase/db
+COPY ./db/seeding/*.gz /liquibase/db/seeding/
+COPY ./db/seeding/*.xml /liquibase/db/seeding/
+COPY ./db/changelog /liquibase/db/changelog
 
-CMD ["sh", "-c", "docker-entrypoint.sh --url=${DB_URL} --username=${DB_USERNAME} --password=${DB_PASSWORD} --classpath=/liquibase --changeLogFile=db/changelog/db.changelog-master.xml update"]
+COPY liquibase-postgresql-4.7.1.jar /liquibase/lib/
+
+CMD ["sh", "-c", "docker-entrypoint.sh --url=${DB_URL} --username=${DB_USERNAME} --password=${DB_PASSWORD} --classpath=/liquibase --changeLogFile=db/changelog/db.changelog-master.xml --logLevel=info update"]

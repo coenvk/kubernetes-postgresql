@@ -8,32 +8,26 @@
                       http://www.liquibase.org/xml/ns/dbchangelog-ext
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet id="loadLargeData__person" author="Coen">
-        <ext:loadLargeData file="db/seeding/name.basics.tsv.gz" separator="\t" tableName="person" quote="\b"
-                           columnNames="nconst,primary_name,birth_year,death_year,primary_profession,known_for_titles"/>
+        <ext:copy path="db/seeding/name.basics.tsv.gz" separator="\t" tableName="person" quote="\b"/>
     </changeSet>
 
     <changeSet id="loadLargeData__title" author="Coen">
-        <ext:loadLargeData file="db/seeding/title.basics.tsv.gz" separator="\t" tableName="title" quote="\b"
-                           columnNames="tconst,title_type,primary_title,original_title,is_adult,start_year,end_year,runtime_minutes,genres"/>
+        <ext:copy path="db/seeding/title.basics.tsv.gz" separator="\t" tableName="title" quote="\b"/>
     </changeSet>
 
     <changeSet id="loadLargeData__title_aka" author="Coen">
-        <ext:loadLargeData file="db/seeding/title.akas.tsv.gz" separator="\t" tableName="title_aka" quote="\b"
-                           columnNames="title_id,ordering,title,region,language,types,attributes,is_original_title"/>
+        <ext:copy path="db/seeding/title.akas.tsv.gz" separator="\t" tableName="title_aka" quote="\b"/>
     </changeSet>
 
     <changeSet id="loadLargeData__episode" author="Coen">
-        <ext:loadLargeData file="db/seeding/title.episode.tsv.gz" separator="\t" tableName="episode" quote="\b"
-                           columnNames="tconst,parent_tconst,season_number,episode_number"/>
+        <ext:copy path="db/seeding/title.episode.tsv.gz" separator="\t" tableName="episode" quote="\b"/>
     </changeSet>
 
     <changeSet id="loadLargeData__principal" author="Coen">
-        <ext:loadLargeData file="db/seeding/title.principals.tsv.gz" separator="\t" tableName="principal" quote="\b"
-                           columnNames="tconst,ordering,nconst,category,job,characters"/>
+        <ext:copy path="db/seeding/title.principals.tsv.gz" separator="\t" tableName="principal" quote="\b"/>
     </changeSet>
 
     <changeSet id="loadLargeData__rating" author="Coen">
-        <ext:loadLargeData file="db/seeding/title.ratings.tsv.gz" separator="\t" tableName="rating" quote="\b"
-                           columnNames="tconst,average_rating,num_votes"/>
+        <ext:copy path="db/seeding/title.ratings.tsv.gz" separator="\t" tableName="rating" quote="\b"/>
     </changeSet>
 </databaseChangeLog>

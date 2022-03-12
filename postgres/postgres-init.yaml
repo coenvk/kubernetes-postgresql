@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-init
+  namespace: postgres-operator
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postgres-init
+    spec:
+      containers:
+        - name: postgres-init
+          image: postgres:14
+          imagePullPolicy: IfNotPresent
+          command: [ "bin/sh", "-c", "export PGPASSWORD='$(DB_PASSWORD)'; psql -U $(DB_USERNAME) -h $(DB_HOST) -p $(DB_PORT) -d $(DB_DATABASE) -a -f /config/init.sql" ]
+          env:
+            - name: DB_HOST
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: host } }
+            - name: DB_PORT
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: port } }
+            - name: DB_DATABASE
+              valueFrom: { secretKeyRef: { name: hippo-pguser-hippo, key: dbname } }
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: hippo-pguser-postgres, key: user } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: hippo-pguser-postgres, key: password } }
+          volumeMounts:
+            - name: postgres-configmap
+              mountPath: /config
+      volumes:
+        - name: postgres-configmap
+          configMap:
+            name: postgres-configmap
+      restartPolicy: OnFailure
+  backoffLimit: 4

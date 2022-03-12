@@ -1,4 +1,6 @@
 namespace: postgres-operator
 
 resources:
+- postgres-configmap.yaml
 - postgres.yaml
+- postgres-init.yaml

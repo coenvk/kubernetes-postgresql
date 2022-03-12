@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+  namespace: postgres-operator
+  labels:
+    name: postgres-configmap
+data:
+  init.sql: |-
+    GRANT pg_read_server_files, pg_execute_server_program TO hippo;

@@ -3,5 +3,6 @@ namespace: postgres-operator
 resources:
 - pgpool-configmap.yaml
 - pgpool-secret.yaml
+- tpcc-secret.yaml
 - pgpool.yaml
 - pgpool-svc.yaml

@@ -8,4 +8,20 @@
     <include file="db/changelog/db.changelog-v1.xml"/>
     <include file="db/seeding/db.changelog-seeding.xml"/>
     <include file="db/changelog/db.changelog-v1-constraints.xml"/>
+
+    <!-- Rename person.known_for_titles to person.popular_titles -->
+    <include file="db/changelog/db.changelog-v2.expand.xml"/>
+    <include file="db/changelog/db.changelog-v2.contract.xml"/>
+
+    <!-- Rename principal to employee -->
+    <include file="db/changelog/db.changelog-v3.expand.xml"/>
+    <include file="db/changelog/db.changelog-v3.contract.xml"/>
+
+    <!-- Rename employee to principal -->
+    <include file="db/changelog/db.changelog-v4.expand.xml"/>
+    <include file="db/changelog/db.changelog-v4.contract.xml"/>
+
+    <!-- Modify data type person.popular_titles to varchar(100) and rename to person.known_for_titles -->
+    <include file="db/changelog/db.changelog-v5.expand.xml"/>
+    <include file="db/changelog/db.changelog-v5.contract.xml"/>
 </databaseChangeLog>
