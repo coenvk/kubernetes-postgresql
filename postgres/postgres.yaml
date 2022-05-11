@@ -45,8 +45,35 @@ spec:
                 - "ReadWriteOnce"
               resources:
                 requests:
-                  storage: 2Gi
-  monitoring:
-    pgmonitor:
-      exporter:
-        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.0.4-0
+                  storage: 1Gi
+#  monitoring:
+#    pgmonitor:
+#      exporter:
+#        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.0.4-0
+
+  patroni:
+    dynamicConfiguration:
+      # synchronous_mode: true
+      # synchronous_mode_strict: true
+      postgresql:
+        parameters:
+          synchronous_commit: off
+          shared_buffers: 20GB
+          max_connections: 128
+          min_wal_size: 2GB
+          max_wal_size: 20GB
+          maintenance_work_mem: 32MB
+          checkpoint_timeout: 1h
+          checkpoint_completion_target: 1
+          checkpoint_warning: 0
+          log_checkpoints: off
+          logging_collector: off
+          autovacuum: off
+          autovacuum_work_mem: -1
+          wal_buffers: 512MB
+          max_stack_depth: 2MB
+          work_mem: 512MB
+          temp_buffers: 512MB
+          max_locks_per_transaction: 64
+          max_pred_locks_per_transaction: 64
+          wal_level: replica

@@ -1,8 +1,9 @@
 kubectl apply -k postgres-operator-examples/kustomize/install
 kubectl apply -k postgres
+sleep 5s
 kubectl -n postgres-operator wait --for=condition=ready pod -l postgres-operator.crunchydata.com/instance-set=instance1
-kubectl -n postgres-operator wait --for=condition=available secret -l postgres-operator.crunchydata.com/pguser=postgres
 PASSWORD=postgres
+sleep 10s
 kubectl patch secret -n postgres-operator hippo-pguser-postgres -p \
    "{\"stringData\":{\"password\":\"${PASSWORD}\",\"verifier\":\"\"}}"
 kubectl apply -k liquibase
