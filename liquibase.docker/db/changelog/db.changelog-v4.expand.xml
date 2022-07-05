@@ -7,7 +7,7 @@
 
     <property name="zd-strategy" value="expand" global="false"/>
 
-    <changeSet id="renameTable__ranking__expand" author="Coen">
-        <ext:renameTableUsingView oldTableName="ranking" newTableName="rating"/>
+    <changeSet id="renameTable__rating__expand" author="Coen">
+        <ext:renameTableUsingCopy oldTableName="rating" newTableName="ranking"/>
     </changeSet>
 </databaseChangeLog>

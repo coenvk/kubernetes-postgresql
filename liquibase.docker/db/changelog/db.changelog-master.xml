@@ -13,15 +13,19 @@
     <include file="db/changelog/db.changelog-v2.expand.xml"/>
     <include file="db/changelog/db.changelog-v2.contract.xml"/>
 
-    <!-- Rename principal to employee -->
+    <!-- Rename title_aka.title_id to title_aka.tconst -->
     <include file="db/changelog/db.changelog-v3.expand.xml"/>
     <include file="db/changelog/db.changelog-v3.contract.xml"/>
 
-    <!-- Rename employee to principal -->
+    <!-- Rename principal to employee (using copy) -->
     <include file="db/changelog/db.changelog-v4.expand.xml"/>
     <include file="db/changelog/db.changelog-v4.contract.xml"/>
 
-    <!-- Modify data type person.popular_titles to varchar(100) and rename to person.known_for_titles -->
+    <!-- Rename employee to principal (using view) -->
     <include file="db/changelog/db.changelog-v5.expand.xml"/>
     <include file="db/changelog/db.changelog-v5.contract.xml"/>
+
+    <!-- Modify data type person.popular_titles to varchar(100) and rename to person.known_for_titles -->
+    <include file="db/changelog/db.changelog-v6.expand.xml"/>
+    <include file="db/changelog/db.changelog-v6.contract.xml"/>
 </databaseChangeLog>

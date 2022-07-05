@@ -2,12 +2,11 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
 
     <property name="zd-strategy" value="expand" global="false"/>
 
-    <changeSet id="renameTable__rating__expand" author="Coen">
-        <ext:renameTableUsingCopy oldTableName="rating" newTableName="ranking"/>
+    <changeSet id="renameColumn__title_id__expand" author="Coen">
+        <renameColumn tableName="title_aka" oldColumnName="title_id" newColumnName="tconst"/>
     </changeSet>
 </databaseChangeLog>
